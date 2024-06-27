@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zakazivanje</title>
+<!-- CSS za Flatpickr -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        width: 300px;
+    }
+    .flatpickr-input, input[type="text"], input[type="email"], input[type="tel"], input[type="submit"] {
+        width: calc(100% - 26px); /* Širina input polja, uzimajući u obzir ikonicu kalendara */
+        padding: 10px;
+        margin: 5px 0;
+        box-sizing: border-box;
+    }
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+    <form action="send_email.php" method="post">
+        <label for="datetime">Izaberite datum i vreme:</label>
+        <input type="text" id="datetime" name="datetime" class="flatpickr-input" required><br><br>
+        <label for="phone">Unesite broj telefona:</label>
+        <input type="tel" id="phone" name="phone" placeholder="Unesite broj telefona" required><br><br>
+        <label for="email">Unesite email adresu:</label>
+        <input type="email" id="email" name="email" placeholder="Unesite email adresu" required><br><br>
+        <input type="submit" value="Zakaži">
+    </form>
+
+    <!-- JavaScript za Flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        // Inicijalizacija Flatpickr
+        flatpickr("#datetime", {
+            enableTime: true, // Omogućava izbor vremena
+            minTime: "15:00",
+            maxTime: "20:00",
+            dateFormat: "Y-m-d H:i", // Format datuma i vremena koji će se slati na server
+            time_24hr: true, // 24-satni format vremena
+            minDate: "today", // Minimalni datum je današnji datum
+            maxDate: new Date().fp_incr(30), // Maksimalni datum je 30 dana od danas
+            locale: {
+                firstDayOfWeek: 1, // Ponedeljak kao prvi dan nedelje
+                weekdays: {
+                    shorthand: ["Ned", "Pon", "Uto", "Sre", "Čet", "Pet", "Sub"],
+                    longhand: ["Nedelja", "Ponedeljak", "Utorak", "Sreda", "Četvrtak", "Petak", "Subota"],
+                },
+                months: {
+                    shorthand: ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Avg", "Sep", "Okt", "Nov", "Dec"],
+                    longhand: ["Januar", "Februar", "Mart", "April", "Maj", "Jun", "Jul", "Avgust", "Septembar", "Oktobar", "Novembar", "Decembar"],
+                },
+            },
+        });
+    </script>
+</body>
+</html>
